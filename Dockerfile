@@ -1,13 +1,10 @@
 FROM golang:1.12-alpine
 
-LABEL maintainer="kainlite@gmail.com"
-
 # Set the Current Working Directory inside the container
-WORKDIR $GOPATH/src/github.com/kainlite/whatismyip-go
+WORKDIR $GOPATH/src/github.com/drorvt/whatismyip
 COPY . .
 
 # Download all the dependencies
-# https://stackoverflow.com/questions/28031603/what-do-three-dots-mean-in-go-command-line-invocations
 RUN go get -d -v ./...
 
 # Install the package and create test binary
@@ -24,4 +21,4 @@ ENV WHATISMYIP_PORT 8000
 USER nobody:nobody
 
 # Run the executable
-CMD ["whatismyip-go"]
+CMD ["whatismyip"]
