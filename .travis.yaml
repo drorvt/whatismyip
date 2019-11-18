@@ -1,14 +1,14 @@
-language: python
+language: go
 
 services:
   - docker
 
 before_install:
-  docker build --tag ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
-  docker run --name python-app -p 5000:5000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
-
+- docker build --no-cache -t ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} .
+- docker run ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT} /go/src/github.com/drorvt/whatismyip-/whatismyip.test
+- docker run -d -p 127.0.0.1:8000:8000 ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}
 
 script:
-  - curl 0.0.0.0:5000
+  - curl 127.0.0.1:8000
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push ${TRAVIS_REPO_SLUG}:${TRAVIS_COMMIT}

@@ -5,7 +5,7 @@
     create_containers: 1
     default_container_name: docker
     default_container_image: drorvt/whatismyip:1fffea471c333105e40ff09d480ea5c0533cac34
-    default_container_command: curl 0.0.0.0:5000
+    default_container_command: curl 0.0.0.0:8000
 
   tasks:
     - name: Install aptitude using apt
@@ -15,10 +15,10 @@
       apt: name={{ item }} state=latest update_cache=yes
       loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
 
-    - name: Add Docker GPG apt Key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
+    # - name: Add Docker GPG apt Key
+    #   apt_key:
+    #     url: https://download.docker.com/linux/ubuntu/gpg
+    #     state: present
 
     - name: Add Docker Repository
       apt_repository:
